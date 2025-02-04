@@ -1,0 +1,35 @@
+# CPACS Tool Properties (optional)
+
+## Synopsis
+Configure the CPACS tool specific values.
+
+## Usage
+Fill in the following values to make your tool using the CPACS specific features, e.g.input and output mapping.
+
+- **Incoming CPACS endpoint name**: Select theinput that represents the incoming CPACS file. This input must be configuredon the "Inputs and Outputs" page.
+    **Note**
+    The data type of this input must be "File". Usage must be "required".
+- **Input mapping file**: Select or enter the mapping file for input mapping. Supported file extensions are ".xml" for classic mapping and ".xsl" for advanced XSLT-mapping.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page. The file chooser dialog regards thatfact.
+- **Tool input filename**: Enter the filename of the input file the integrated tool will access. This file will be generated as a result of the incoming CPACS file mapped with the incoming XPath variables, the input mapping and, if selected, the tool specific input.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page.
+- **Tool output filename**: Enter the filename of the output file of your tool. This file will be accessed during the output mapping execution.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page.
+- **Output mapping file**: Select or enter the mapping file for output mapping. Supported file extensions are ".xml" for classic mapping and ".xsl" for advanced XSLT-mapping.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page. The file chooser dialog regards that fact.
+- **CPACS result filename**: Enter the filename for the resulting CPACS-file. This file will be the mapped tool output fileand represents the outgoing CPACS file. It is the also the basis for dynamic output values in the later workflow configuration accessed via XPath.
+- **Outgoing CPACS endpoint name**: Select the output the CPACS result file will be sent to. This output must be configured on the "Inputs and Outputs" page.
+    **Note**
+    The data type of this input must be "File".
+- **Merge static tool specific input**: If selected the integrated tool will work with tool specific input and the following values need to be configured.
+- **Tool specific input file**: Select or enter the XML file with the tool specific input.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page. The file chooser dialog regards that fact.
+- **Tool specific input mapping file**: Select or enter the mapping file for tool specific mapping. Supported file extensions are ".xml" for classic mapping and ".xsl" for advanced XSLT-mapping.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page. The file chooser dialog regards that fact.
+- **Only run on changed inputs**: If selected the tool will only run on changed inputs. Therefore the tool input file and incoming directories are verified. If there are no changes detected the incoming CPACS file will be mapped with the result of the previous run.

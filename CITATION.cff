@@ -1,0 +1,38 @@
+# SPDX-FileCopyrightText: 2025 German Aerospace Center (DLR)
+# SPDX-FileContributor: Tim Rosenbach <tim.rosenbach@dlr.de>
+#
+# SPDX-License-Identifier: CC-BY-NC-ND-4.0
+
+cff-version: 1.2.0
+title: >-
+  Automated Testing of the GUI of RCE using Large Language
+  Models
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Tim
+    family-names: Rosenbach
+    email: tim.rosenbach@dlr.de
+    affiliation: German Aerospace Center (DLR)
+    orcid: 'https://orcid.org/0009-0003-9748-6691'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.14646517
+abstract: >-
+  This software was developed to test the GUI of RCE using
+  LLMs. At the moment it is possible to test the Tool
+  Integration Wizard of RCE and partially test the rest of
+  the GUI. It is possible to use OpenAI models or use local
+  LLMs hosted by Ollama.
+keywords:
+  - Large Language Models
+  - LLM
+  - Automation
+  - GUI Testing
+  - Remote Component Environment
+  - RCE
+license: MIT
+version: '1.0'
+date-released: '2025-01-09'

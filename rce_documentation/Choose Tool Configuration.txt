@@ -1,0 +1,18 @@
+# Choose Integration Configuration
+
+## Synopsis
+First page of the wizard for choosing whether to integrate a tool from scratch or to reactivate (and perhaps edit) an inactive tool.
+
+## Usage
+- **Create a new common configuration**:Choosing this option, a complete new integration for a common configuration will be created without presets.
+- **Create a new <other> configuration(optional)**: If some extensions are installed, it is possible to create configurations that need special pages. These are shown here.
+- **Create new integration with template**:Some cases need always the same configuration for some elements, so a preset configuration is given with these templates.
+- **Choose an inactive configuration to edit**:If configurations are found in your integration folder and the components they describe are not active, you can choose one of them in the list, edit it if you want and then activate the component.
+
+# Choose Configuration
+
+## Synopsis
+Edit an existing tool configuration from the configuration folder or load an existing configuration from disk.
+
+## Usage
+With this wizard, you can edit an existing active or inactive integration configuration. You can select one of the integration configurations from the list of configurations that have been detected, but you can also load a valid configuration from disk. The other pages of the wizard will be filled with the content of the configuration. After updating your component, it could be necessary to reopen your workflow editor (to get the correct information in the properties tab), but if you execute it without doing that it will always use the updated values. If you change something on the inputs or outputs, unfortunately at the moment you have to remove the instances of your tool in a configured workflow and put it back in. 

@@ -1,0 +1,46 @@
+
+
+# Launch Settings
+
+## Synopsis
+Add a launch setting for the tool, which defines the tool’s location and version. Also, define the working directory for the tool execution and clean up settings.
+
+## Folder structure
+
+There are different option variations of the structure of the folders (working dir, tool dir, etc.):
+- "Use a new working directory on each run" not selected
+"Do not copy tool" selected
+
+- "Use a new working directory on each run" not selected
+"Copy tool to working directory once" selected
+
+- "Use a new working directory on each run" selected
+"Copy tool to working directory once" selected
+
+- "Use a new working directory on each run" selected
+"Copy tool to working directory on each run" selected
+
+## Usage
+With the launch settings, you define which tool is used and how it is used.
+
+Required fields:
+- One set of launch settings: In the table on the top, the list of already defined launch settings will be shown. Currently, exactly one setting is supported. When clicking on "Add", thefollowing fields for the definition of a set are available:
+    - **Tool Directory**: This is the path to the actual tool. The path is chosen from your local disk and must be existent every time the component is executed. Please note: If the integration is transferred to another machine, this path must be adapted.
+    - **Version**: The version is to identify your tool. If other components with the same name were integrated by other users, they can be distinguished by the version (which is shown in brackets behind the tool name in the workflow palette). Please note: To prevent inconsistencies, make sure there are never two tools with the same name and same version published by two different machines.
+    - **Working directory**: You can choose where you want to execute the tool from and where temporary files are written. You can either define a custom path to a directory of your choice here or check "Create arbitrary directory in RCE temp directory" to use a default directory within the RCE temp directory.
+    - **Limit parallel executions(optional):** Here you can limit the number of parallel executions of this tool. If this number is reached anyfurther call of the tool will wait until a prior call is finished. This can be useful when you have restricted licenses for a specific tool or ressource restriction is desired.
+
+    **Note**
+    If you use relative paths for the Tool Directory, the root path used for this (".") is always the RCE installation folder.
+    
+Optional fields:
+- **Use a new working directory on each run**: You can choose whether your tool should have new input and configuration folders on each run or if they will only be created once.
+- **Tool Copying Behavior**: On the bottom left there are some choices regarding the copying of the integrated tool:
+    - **Do not copy tool**: The tool remains in its directory. The variable "Tool dir" contains the absolute path.
+    - **Copy tool to working directory once**: The tool will be copied into the working directory on workflow start. Note: This is not possible, if the tool has hard coded dependencies or is too big to be copied.
+    - **Copy tool to working directory on eachrun**: This option is only available, if the "Use a new working directory on each run" option above is checked. The tool will be copied into a directory within the working directory for each run. Note: This is not possible, if the tool has hard coded dependencies or is too big to be copied.
+
+- **Clean up choices for working directory(ies) in workflow configuration**: On the bottom right there are some options for the behavior of temp directory deletion. The choice you make here is not final, but gives the user the possibility to choose the behavior for her/himself when editing a workflow. At least one of the options must be selected.
+    - **Never delete working directory(ies)**: If this is checked, every single file that was created during the components run is left in the temp directory. This can be a good option to debug the tool integration.
+    - **Delete working directory(ies) when workflow is finished**: Here, the created files are deleted when the entire workflow is finished. If some files are needed in multiple runs, this can be good as they are not copied every time. Check "Keep in case of failed workflow run" to prevent the deletion in case of failure. This can be useful for debugging, in particular.
+    - **Delete working directory(ies) after eachrun of the tool**: This option is only available, if the "Use a new working directory on each run" box is checked. With this, after each run the iteration directory is deleted. Check "Keep in case of failed toolrun" to prevent the deletion in case of failure. This can be useful for debugging, in particular.

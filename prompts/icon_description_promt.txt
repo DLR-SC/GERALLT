@@ -1,0 +1,3 @@
+Describe the image precisely.
+For example: "A green circle with a white checkmark in the middle. It represents that something works or is correct."
+Never write more than two sentences.

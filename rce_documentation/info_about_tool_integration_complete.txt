@@ -1,0 +1,204 @@
+# Tool Integration Configuration
+
+## Choose Integration Configuration
+
+### Synopsis
+First page of the wizard for choosing whether to integrate a tool from scratch or to reactivate (and perhaps edit) an inactive tool.
+
+### Usage
+- **Create a new common configuration**:Choosing this option, a complete new integration for a common configuration will be created without presets.
+- **Create a new <other> configuration(optional)**: If some extensions are installed, it is possible to create configurations that need special pages. These are shown here.
+- **Create new integration with template**:Some cases need always the same configuration for some elements, so a preset configuration is given with these templates.
+- **Choose an inactive configuration to edit**:If configurations are found in your integration folder and the components they describe are not active, you can choose one of them in the list, edit it if you want and then activate the component.
+
+
+## Choose Configuration
+
+### Synopsis
+Edit an existing tool configuration from the configuration folder or load an existing configuration from disk.
+
+### Usage
+With this wizard, you can edit an existing active or inactive integration configuration. You can select one of the integration configurations from the list of configurations that have been detected, but you can also load a valid configuration from disk. The other pages of the wizard will be filled with the content of the configuration. After updating your component, it could be necessary to reopen your workflow editor (to get the correct information in the properties tab), but if you execute it without doing that it will always use the updated values. If you change something on the inputs or outputs, unfortunately at the moment you have to remove the instances of your tool in a configured workflow and put it back in. 
+
+
+## Tool Description
+
+### Synopsis
+Define some characteristics of the tool such as name or icon and give some information about the tool integrator.
+
+### Usage
+On this page, some characteristics of the integrated tool are defined. Information on the tool integrator or graphical elements are optional.
+
+Required fields:
+- **Name**: This field defines the name of the component. The tool is displayed with this name in the palette view. Note that the name must not contain special characters. Furthermore the name will not be accepted if there is another locally created tool with the same name. 
+
+Optional fields:
+- **Icon Path**: Select an icon for the tool. At best, it is larger than 32x32 pixels and has the same width and height. To avoid an absolute path link to the icon, select to copy it to the configuration folder.
+- **Group Path**: Define a path here under which the component is displayed in the palette view. Subgroups can beseparated by "/".
+- **Documentation**: Add a documentation file for the tool. Note that the file must be a PDF or a TXT document and it must not be greater than 50 MB.
+- **Description**: Provide a description of the tool, that can be viewed by other users in the network when using the component in a workflow.
+- **Name/E-Mail**: In this field, specify somecontact information, if anyone has questions or want to makesuggestions.
+
+
+## Inputs and Outputs
+
+### Synopsis
+Define the inputs and outputs that the component of the tool should have in an RCE workflow.
+
+### Usage
+On this page, the inputs and outputs for the component are defined. Their behavior is the same as other inputs or outputs of other components, but they cannot be changed. After successfully integrating a tool, inputs or outputs can not be removed, changed or added. However, handling and constraint options can be selected for customization purposes for the defined inputs. When adding an input choose all possible options and select one for default. It is not mandatory to define inputs and outputs. If there are no inputs, the component is executed once at workflow start and then finished.
+Verification allows to manually review tool results and verify them. Before these results are processed by a running workflow and used by other components, they have to be approved by the tool integrator manually. Therefore a verification key will be generated after tool execution. To confirm the results, use the "Verify tool results"dialog, which can be found in the main menu (Run -> Verify tool results...) to enter the key. This verification key is stored in the tool working directory by default, but it can also be stored at a user-defined location on the machine, where the tool is integrated. In addition, the verification key can be sent via an email provided.
+
+
+## Tool Properties
+
+### Synopsis
+Define properties for the tool, which can be used as parameters later in all scripts and can be configured when a workflow is set up.
+
+### Usage
+Properties are a means to provide the user of the integrated tool some attributes for configuration the tool when using it in a workflow. For example, if the tool is able to run with multiple cores, a key "numCores" can be defined and later added via a placeholder in your command execution script or pre/post execution script (e.g. "tool.exe ${prop:numCores}"). This key is then displayed in the properties view of the integrated component and the value can be set there.
+Properties have a display name that makes them more readable for others. Set a default value, to provide some useful presettings. A comment can be added to provide some useful information to the tool user.
+The use of properties is optional. 
+Since RCE 8.0 it is possible to define properties as placeholders. With this option,which is activated in the properties view of the tool component, the user can define that the value for the selected property is not defined while editing the workflow, but at workflow start. 
+While the use of properties allows a great amount of flexibility, they also easily lead to inadvertent security issues. Consider, e.g., a tool that copies some data to a configurable directory and removes that directory after its computation as part of cleanup. Malicious users may set the configuration directory to some vital systemdirectory and cause the tool to remove that directory on termination. To prevent users from creating such security issues by accident, RCE does not allow the use of propertyvalues containing \", ASCII-characters in the range 0x00-0x1f, \\, /, \*, \?. Moreover, RCE prevents the use of % on Windows systems, and of ` and \$ on Linux systems.
+If you would like to allow your users to supply a configuration file or aconfiguration directory, please add this file as an explicit input to the component. Other options include, e.g., fixing a "whitelist" of safe configuration options and allowing the user a choice of these configuration options via properties.
+
+### Groups
+Properties can be categorized in groups, for example for a specific context. 
+Optionally, the property configurations can be stored at runtime in a file per group located in the "Config" folder in a temporary directory. These files contain the keys and the respective values. The file names can be adjusted. 
+
+
+## Launch Settings
+
+### Synopsis
+Add a launch setting for the tool, which defines the tool’s location and version. Also, define the working directory for the tool execution and clean up settings.
+
+### Folder structure
+
+There are different option variations of the structure of the folders (working dir, tool dir, etc.):
+- "Use a new working directory on each run" not selected
+"Do not copy tool" selected
+
+- "Use a new working directory on each run" not selected
+"Copy tool to working directory once" selected
+
+- "Use a new working directory on each run" selected
+"Copy tool to working directory once" selected
+
+- "Use a new working directory on each run" selected
+"Copy tool to working directory on each run" selected
+
+### Usage
+With the launch settings, you define which tool is used and how it is used.
+
+Required fields:
+- One set of launch settings: In the table on the top, the list of already defined launch settings will be shown. Currently, exactly one setting is supported. When clicking on "Add", thefollowing fields for the definition of a set are available:
+    - **Tool Directory**: This is the path to the actual tool. The path is chosen from your local disk and must be existent every time the component is executed. Please note: If the integration is transferred to another machine, this path must be adapted.
+    - **Version**: The version is to identify your tool. If other components with the same name were integrated by other users, they can be distinguished by the version (which is shown in brackets behind the tool name in the workflow palette). Please note: To prevent inconsistencies, make sure there are never two tools with the same name and same version published by two different machines.
+    - **Working directory**: You can choose where you want to execute the tool from and where temporary files are written. You can either define a custom path to a directory of your choice here or check "Create arbitrary directory in RCE temp directory" to use a default directory within the RCE temp directory.
+    - **Limit parallel executions(optional):** Here you can limit the number of parallel executions of this tool. If this number is reached anyfurther call of the tool will wait until a prior call is finished. This can be useful when you have restricted licenses for a specific tool or ressource restriction is desired.
+
+    **Note**
+    If you use relative paths for the Tool Directory, the root path used for this (".") is always the RCE installation folder.
+    
+Optional fields:
+- **Use a new working directory on each run**: You can choose whether your tool should have new input and configuration folders on each run or if they will only be created once.
+- **Tool Copying Behavior**: On the bottom left there are some choices regarding the copying of the integrated tool:
+    - **Do not copy tool**: The tool remains in its directory. The variable "Tool dir" contains the absolute path.
+    - **Copy tool to working directory once**: The tool will be copied into the working directory on workflow start. Note: This is not possible, if the tool has hard coded dependencies or is too big to be copied.
+    - **Copy tool to working directory on eachrun**: This option is only available, if the "Use a new working directory on each run" option above is checked. The tool will be copied into a directory within the working directory for each run. Note: This is not possible, if the tool has hard coded dependencies or is too big to be copied.
+
+- **Clean up choices for working directory(ies) in workflow configuration**: On the bottom right there are some options for the behavior of temp directory deletion. The choice you make here is not final, but gives the user the possibility to choose the behavior for her/himself when editing a workflow. At least one of the options must be selected.
+    - **Never delete working directory(ies)**: If this is checked, every single file that was created during the components run is left in the temp directory. This can be a good option to debug the tool integration.
+    - **Delete working directory(ies) when workflow is finished**: Here, the created files are deleted when the entire workflow is finished. If some files are needed in multiple runs, this can be good as they are not copied every time. Check "Keep in case of failed workflow run" to prevent the deletion in case of failure. This can be useful for debugging, in particular.
+    - **Delete working directory(ies) after eachrun of the tool**: This option is only available, if the "Use a new working directory on each run" box is checked. With this, after each run the iteration directory is deleted. Check "Keep in case of failed toolrun" to prevent the deletion in case of failure. This can be useful for debugging, in particular.
+
+
+## CPACS Tool Properties (optional)
+
+### Synopsis
+Configure the CPACS tool specific values.
+
+### Usage
+Fill in the following values to make your tool using the CPACS specific features, e.g.input and output mapping.
+
+- **Incoming CPACS endpoint name**: Select theinput that represents the incoming CPACS file. This input must be configuredon the "Inputs and Outputs" page.
+    **Note**
+    The data type of this input must be "File". Usage must be "required".
+- **Input mapping file**: Select or enter the mapping file for input mapping. Supported file extensions are ".xml" for classic mapping and ".xsl" for advanced XSLT-mapping.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page. The file chooser dialog regards thatfact.
+- **Tool input filename**: Enter the filename of the input file the integrated tool will access. This file will be generated as a result of the incoming CPACS file mapped with the incoming XPath variables, the input mapping and, if selected, the tool specific input.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page.
+- **Tool output filename**: Enter the filename of the output file of your tool. This file will be accessed during the output mapping execution.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page.
+- **Output mapping file**: Select or enter the mapping file for output mapping. Supported file extensions are ".xml" for classic mapping and ".xsl" for advanced XSLT-mapping.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page. The file chooser dialog regards that fact.
+- **CPACS result filename**: Enter the filename for the resulting CPACS-file. This file will be the mapped tool output fileand represents the outgoing CPACS file. It is the also the basis for dynamic output values in the later workflow configuration accessed via XPath.
+- **Outgoing CPACS endpoint name**: Select the output the CPACS result file will be sent to. This output must be configured on the "Inputs and Outputs" page.
+    **Note**
+    The data type of this input must be "File".
+- **Merge static tool specific input**: If selected the integrated tool will work with tool specific input and the following values need to be configured.
+- **Tool specific input file**: Select or enter the XML file with the tool specific input.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page. The file chooser dialog regards that fact.
+- **Tool specific input mapping file**: Select or enter the mapping file for tool specific mapping. Supported file extensions are ".xml" for classic mapping and ".xsl" for advanced XSLT-mapping.
+    **Note**
+    The path must be relative to the tool directory configured on the "Launch Settings" page. The file chooser dialog regards that fact.
+- **Only run on changed inputs**: If selected the tool will only run on changed inputs. Therefore the tool input file and incoming directories are verified. If there are no changes detected the incoming CPACS file will be mapped with the result of the previous run.
+
+
+## Execution
+
+### Synopsis
+Write the execution script for the component and pre/post scripts if required.
+
+### Usage
+This page defines how the tool will be executed. At least for one operation system(Windows or Linux) an execution command must be defined. It is possible to provide both, the correct one will be chosen at workflow start. The scripting language is Batch/Shell. Also, you can provide a pre-execution and a post-execution script. These run before resp. after the execution of the tool and are written in Python (it is a Java adapted version of Python, called Jython. Please note that Jython does not support all external modules for Python.)
+In the scripts and commands, you are able to use some of the elements you defined on the previous pages. They are listed in the dropdown boxes on the righthand side. To use them, select the desired one and click on "Insert" and a placeholder for the chosen element will be inserted into the active script. You could also just write the correct placeholder syntax into the script. The elements are:
+- **Inputs**: Placeholder: ${in:Input name}:These placeholders will be replaced with the values that was received by the component as input in the current run. Every type except File and Directory is replaced with the actual value (e.g. a float placeholder "${in:x} will bereplaced with "1.0" if that value was received). File and Directory will not be replaced with the content, but with the absolute path of the corresponding file or folder. Strings and the inserted paths need (single) quotation marks in the scripts to be used (e.g. " ‘${in:file}’ ").
+Inputs are available for every script.
+Vector/Matrix: If you have an input of the type vector/matrix, the placeholder can be used in the pre and post script like an array in Python. So ‘${in:vec}[0]’/‘${in:matrix}[0][0]’ will return the first element of the incoming vector ‘vec’ resp. matrix'matrix'. In the command execution scripts, inserting a vector/matrix is not possible.
+- **Outputs**: Placeholder: ${out:Output name}: Outputs are only available in the pre/post execution scripts. They will be replaced by a special variable for RCE, to identify them after the script has finished. Its current value is read and written to the corresponding component output. Again, File and Directory do not provide their content, but the absolute path. Output placeholders should only be used asassignments.
+- **Properties**:  Placeholder: ${prop: key }: These are the properties you can define on the "Property Configuration Page". You can insert them into the scripts and they will be replaced by the value that is entered when configuring a workflow. Properties are available for every script.
+- **Directories**: Placeholder: ${dir:type}: The directory placeholders are provided by the integration and represent the directories that are created in the temp directory. There are four types of directories which are available for every script:
+    - **Config dir**: This is the absolute path to the created configuration directory. Here, the files from the properties are written and other configuration files can be stored here.
+    - **Working dir**: This is the directory where "Input" and "Config" will be created. It can be the same on each run, but if you chose the option for a new working directory on each iteration, it will be different every run. From this directory, the tool will be called, so if the tool writes output into the folder relative to its caller, this will be the place to look at.
+    - **Input dir**: In this directory,every input file or directory received by the component is written.
+    - **Tool dir**: This is absolute path to the tool directory. If the tool is not copied to the working directory, it is exactly the same path that was chosen in the launch config. If the tool is copied once or on each run to the working directory, it is the absolute path to the new (copied) tool directory.
+    - **Output dir**:In this directory output files or directories to be sent by the component can be written.
+- **Additional Properties**: Placeholder: ${addProp:key}: This are properties which are provided by the component. At the moment, this is only the exit code from the tool command. It is only available in the post-execution script.
+If the tool needs same inputs to be copied in another folder than the Input folder, it should be done using the pre-execution script.
+    **Note**
+    During execution, all content to replace in pre, post or command scripts will be tested for insecure characters (such as /,?,* etc.). If it contains insecure characters, the replacement will be denied and the execution of the workflow will fail. This stringent behavior is needed to prevent malicious code execution, especially on remote hosts like compute nodes.
+- **Windows/Linux execution scripts**: The execution scripts for both operating systems are the native commands (Batchon Windows, Shell on Linux).
+Every line in these scripts represents a single command. All commands will be concatenated and executed in one terminal. For example, invoking a program:
+Windows: testTool.exe
+Linux: ./testTool.sh
+    **Note**
+    On Linux, you can specify the shell which should be used for command execution by inserting a shebang in the first line of the script, e.g.: #!/bin/bash
+    This forces RCE to execute the commands in the specified shell instead of using the default one. Make sure that the shebang is the only content of the first line and that the specified shell is available on your system. Pleasenote that currently only #!/bin/bash and #!/bin/sh are supported.
+Placeholder for inputs, directories or properties can also be used as command line parameters, for example:
+Windows:testTool.exe ${in:NumberOfRuns}
+Linux:./testTool.sh ${in:NumberOfRuns}
+    **Note**
+    For more information about the command lines see:
+    Windows: http://dosprompt.info/
+    Linux: http://linuxcommand.org/learning_the_shell.php
+Example for copying a file: For copying a file, the pre/post execution scripts should be used. In Jython, a file can be copied using the shutil module. The command "shutil.copy('${in:inputFile}', '${dir:tool}/test.txt')" will copy the input file "inputFile" into the tool directory and rename it to ‘test.txt’. Note that since the placeholder for the incoming file and tool directory are replaced before the script execution, the placeholder has to be written with apostrophes.
+For joining paths, it is possible to use a slash "/" for any operation system.
+Note that "Insert copy of file/dir ... " on the righthand side opens a helper dialog to construct copying commands as above.
+Using the RCE Script API:
+Since RCE 6.0.0, the API for the script component is also available in the pre and post scripts in tool integration. With this you can also read and write outputs from/to RCE. There are some other methods for example for writing a "not a value" output to RCE, in case that a component could not run with the current input because it is out of the calculations bounds. You can also let the component fail in the scripts or close outputs for terminating the workflow. More information about the API is in the script components help and you can find examples for all API methods in the example workflow "04_02_Script_And_Tool_Integration_API.wf".
+- **Execution Options**:
+    - **Exit code other than 0 is not an error**: With this option, the component won’t crash if your tool returns a different exit code than 0. This is necessary for some tools since a non zero exit code does not necessarily mean the tool failed. The tool will just run as if everything was ok and the exit code can be analyzed in the postexecution script. Note that the exit code is always the code from the whole execution script. If the tool fails with another exit code but the script does something successful after it, it will return a 0.
+    - **Execute (command(s), pre/post script,tool run imitation script) from**:
+        - **Workingdirectory**: The execution command will be called in the working directory.
+        - **Tool directory**: In some cases, the execution directory has to be in the directory where the tool is located. This option changes the execution directory to this. (It is like calling "cd ${dir:tool}" in the execution command)
+- **Tool Run Imitation**: In a workflow usually multiple tools are integrated and complex workflow logic is applied. For debugging purposes, it is sometimes useful not to actually run each tool involved, but to imitate some tool runs until the workflow logic is properly set up. For that use case, a so called "Tool run imitation mode" exists. By default, it is disabled for an integrated tool. You can enable it by checking the box "Support tool run imitation". By doing that you need to define the behavior of an imitated tool run.
+The workflow creator can decide at workflow design time, whether to run the tool normally or to only imitate tools run. This is defined in the workflow component's properties tab "Imitation mode".
+
+When every necessary field is filled, you can integrate your tool on this page. It will be saved to your disk and integrated as a workflow component. You also can choose just to save the configuration without activating it. 

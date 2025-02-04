@@ -1,0 +1,24 @@
+# SPDX-FileCopyrightText: 2025 German Aerospace Center (DLR)
+# SPDX-FileContributor: Tim Rosenbach <tim.rosenbach@dlr.de>
+#
+# SPDX-License-Identifier: CC-BY-NC-ND-4.0
+
+version = 1
+
+
+[[annotations]]
+path = "prompts/*"
+SPDX-FileCopyrightText = "2025 German Aerospace Center (DLR)"
+SPDX-FileContributor = "Tim Rosenbach <tim.rosenbach@dlr.de>"
+SPDX-License-Identifier = "CC-BY-NC-ND-4.0"
+
+[[annotations]]
+path = "rce_documentation/*"
+SPDX-FileCopyrightText = "2025 German Aerospace Center (DLR)"
+SPDX-FileContributor = "RCE-Developers"
+SPDX-License-Identifier = "EPL-1.0"
+
+[[annotations]]
+path = ["requirements.txt", "config.cfg", ".gitignore"]
+SPDX-FileCopyrightText = "NONE"
+SPDX-License-Identifier = "CC0-1.0"
