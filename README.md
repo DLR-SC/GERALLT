@@ -20,9 +20,9 @@ Download RCE from their [website](https://rcenvironment.de/) and set it up.
 Edit [config.cfg](config.cfg) by adding following information:
 | Parameter | Description |
 |---|---|
-| ``openai_api_key`` | Path to RCE |
-| ``ollama_server_ip`` | OpenAI API Key (if you are using ChatGPT models) |
-| ``rce_path`` | IP to the Ollama server (if you are using local LLMs like Llama) |
+| ``rce_path`` | Path to RCE |
+| ``openai_api_key`` | OpenAI API Key (if you are using ChatGPT models) |
+| ``ollama_server_ip`` | IP to the Ollama server (if you are using local LLMs like Llama) |
 
 ## Settings
 
